@@ -42,7 +42,7 @@ namespace Ordgaater
         static string[] getWordsArray(string path)
         {
             var allLines = File.ReadAllLines(path);
-            string currentWord = "";
+            string currentWord = "";                //currentWord fungerer som lastWord. Bruk string.Empty i stedet for ""
             List<string> list = new List<string>();
 
             for (int index = 0; index < allLines.Length; index++)
@@ -79,29 +79,31 @@ namespace Ordgaater
         static void findCorrespondingWords(string[] allLines, int numberOfPairs)  //all lines bør hete all words
         {
             Random rnd = new Random();
+            int pairCount = 0;
 
-            for (int j = 0; j < numberOfPairs; j++)
+            while(pairCount < numberOfPairs)        //for (int j = 0; j < numberOfPairs; j++)
             {
 
                 int randomIndex = rnd.Next(0, allLines.Length);
 
                 string randomWord = allLines[randomIndex];
                 string lastThreeLetters = randomWord.Substring(randomWord.Length - 3);
-                Console.WriteLine("Tilfeldig ord: " + randomWord);
+                //Console.WriteLine("Tilfeldig ord: " + randomWord);
                 //Console.WriteLine(lastThreeLetters);
 
-                for (int i = 3; i <= 5; i++)
+                for (int i = 4; i <= 5; i++)
                 {
                     string foundWord = findWord(randomWord, allLines, i);
                     if (foundWord != "")
                     {
-                        Console.WriteLine("ordpar nr: " + j);
+                        Console.WriteLine("ordpar nr: " + pairCount);
                         Console.WriteLine(randomWord);
                         Console.WriteLine(foundWord);
                         Console.WriteLine("\n");
+                        pairCount++;
                         break;
                     }
-                    //if (foundWord == "") j--;//dersom ingen korresponderende ord finnes for ordet, prøves det på nytt under samme indeks..
+                    
                 }
             }
 
